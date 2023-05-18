@@ -5,7 +5,8 @@ How to run:
         - Run main.py.
         - Wait.
         
-The script will split properties.json values over multiple temporary json files, 
+The script will first connect to the database, Drop all tables and types, create Tables and Types as listed below.
+If the file is present in Json_input, it'll split properties.json values over multiple temporary json files, 
 which it then uses to insert the data that we need in the database.
 Then it'll read the database for existing users, and generate fake message chains between user_looking_to_rent and user_renting_out_property,
 and insert those messages in the Message table.
