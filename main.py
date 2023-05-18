@@ -42,32 +42,34 @@ drop_all_tables(cur)
 create_tables(cur)
 cursor = db.cursor()
 
-#check for json directory
+
+
+if not os.path.isfile('json_input/properties.json'):
+    print("Please place the properties.json file in the json_input directory.")
+    exit(0)
+    # check for json directory
 if not os.path.isdir('json'):
     os.mkdir('json')
+
 # convert JSON properties.json to multiple files if they don't already exist at the same time.
-
-if not os.path.isfile('json/property.json') or not os.path.isfile('json/user.json'):
-
-    # Define the threads
-    threads = []
-    if not os.path.isfile('json/property.json'):
-        threads.append(threading.Thread(target=migrate_property_json))
-    if not os.path.isfile('json/user.json'):
-        threads.append(threading.Thread(target=migrate_user_json))
+threads = []
+if not os.path.isfile('json/property.json'):
+    threads.append(threading.Thread(target=migrate_property_json))
+if not os.path.isfile('json/user.json'):
+    threads.append(threading.Thread(target=migrate_user_json))
 
     # Start the threads
-    for thread in threads:
-        thread.start()
+for thread in threads:
+    thread.start()
 
     # Wait for all threads to complete
-    for thread in threads:
-        thread.join()
+for thread in threads:
+    thread.join()
 
-    print('Property and user jsons migrated')
+print('Property and User jsons migrated')
 
 # Read the JSON data in batches and insert into the tables
-batch_size = 50
+batch_size = 150
 
 property_filename = "json/property.json"
 for batch_data in read_json_file_in_batches(property_filename, batch_size):
