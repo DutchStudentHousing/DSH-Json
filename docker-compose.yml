@@ -1,0 +1,30 @@
+version: '3.1'
+
+services:
+
+  db:
+    image: postgres:13
+    restart: always
+    volumes:
+      - dbdata:/var/lib/postgresql/data
+    ports:
+      - "${DSH_PORT}:5432"
+    environment:
+      POSTGRES_DB: ${DSH_DB}
+      POSTGRES_USER: ${DSH_USER}
+      POSTGRES_PASSWORD: ${DSH_PASSWORD}
+
+
+  app:
+    build: .
+    ports:
+      - "80:80"
+    env_file:
+      - .env
+    restart: on-failure
+    depends_on:
+      - db
+
+
+volumes:
+  dbdata:
