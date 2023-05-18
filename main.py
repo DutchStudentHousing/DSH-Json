@@ -130,4 +130,4 @@ db.close()
 
 print("Should be migrated over successfully")
 
-exit(1)
+exit(0)
