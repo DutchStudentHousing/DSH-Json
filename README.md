@@ -1,3 +1,15 @@
+How to run:
+
+        - Adjust example.env to hold your local authentication variables, rename to .env.
+        - Add properties.json(sold seperately) in the json_input directory.
+        - Run main.py.
+        - Wait.
+        
+The script will split properties.json values over multiple temporary json files, 
+which it then uses to insert the data that we need in the database.
+Then it'll read the database for existing users, and generate fake message chains between user_looking_to_rent and user_renting_out_property,
+and insert those messages in the Message table.
+Finally, it'll remove the temporary files again. 
 
 Table naming:
 
