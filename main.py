@@ -55,9 +55,10 @@ if not os.path.isdir('json'):
 threads = []
 if not os.path.isfile('json/property.json'):
     threads.append(threading.Thread(target=migrate_property_json))
+    print("Migrating property related data")
 if not os.path.isfile('json/user.json'):
     threads.append(threading.Thread(target=migrate_user_json))
-
+    print("Migrating User related data")
     # Start the threads
 for thread in threads:
     thread.start()
@@ -65,8 +66,7 @@ for thread in threads:
     # Wait for all threads to complete
 for thread in threads:
     thread.join()
-
-print('Property and User jsons migrated')
+    print("data migrated")
 
 # Read the JSON data in batches and insert into the tables
 batch_size = 150
@@ -76,21 +76,21 @@ for batch_data in read_json_file_in_batches(property_filename, batch_size):
     property_data = prepare_property_data(batch_data)
     insert_property_data(cursor, property_data)
 print("property table filled")
-os.remove("json/property.json")
+# os.remove("json/property.json")
 
 property_details_filename = "json/property_details.json"
 for batch_data in read_json_file_in_batches(property_details_filename, batch_size):
     property_details_data = prepare_property_details_data(batch_data)
     insert_property_details_data(cursor, property_details_data)
 print("property_details table filled")
-os.remove("json/property_details.json")
+# os.remove("json/property_details.json")
 
 property_match_filename = "json/property_match.json"
 for batch_data in read_json_file_in_batches(property_match_filename, batch_size):
     property_match_data = prepare_property_match_data(batch_data)
     insert_property_match_data(cursor, property_match_data)
 print("property_match table filled")
-os.remove("json/property_match.json")
+# os.remove("json/property_match.json")
 
 user_filename = 'json/user.json'
 seen_user_ids = set()
@@ -99,24 +99,25 @@ for batch_data in read_json_file_in_batches(user_filename, batch_size):
     users_data = prepare_user_data(batch_data, seen_user_ids)
     insert_users_data(cursor, users_data)
 print("users table filled")
-os.remove("json/user.json")
+# os.remove("json/user.json")
 
 user_landlord_filename = "json/user_landlord.json"
 for batch_data in read_json_file_in_batches(user_landlord_filename, batch_size):
     user_landlord_data = prepare_user_landlord_data(batch_data)
     insert_user_landlord_data(cursor, user_landlord_data)
 print("User_rents_out_property table filled")
-os.remove("json/user_landlord.json")
+# os.remove("json/user_landlord.json")
 
 user_renter_filename = "json/user_renter.json"
 for batch_data in read_json_file_in_batches(user_renter_filename, batch_size):
     user_renter_data = prepare_user_renter_data(batch_data)
     insert_user_renter_data(cursor, user_renter_data)
 print("User_looking_to_rent table filled")
-os.remove("json/user_renter.json")
+# os.remove("json/user_renter.json")
 
 # create fake messages here if they don't already exist.
 if not os.path.isfile('json/fake_messages.json'):
+    print("Generating fake messages, this may take a few minutes.")
     generate_fake_messages(cursor)
 
 message_filename = "json/fake_messages.json"
@@ -124,7 +125,7 @@ for batch_data in read_json_file_in_batches(message_filename, batch_size):
     message_data = prepare_message_data(batch_data)
     insert_message_data(cursor, message_data)
 print("Messages table filled")
-os.remove("json/fake_messages.json")
+# os.remove("json/fake_messages.json")
 
 # Close the database connection
 cursor.close()
