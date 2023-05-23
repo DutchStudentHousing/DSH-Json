@@ -20,12 +20,19 @@ def prepare_property_data(batch_data):
         date_published = datetime.strptime(item['date_published'], "%Y-%m-%dT%H:%M:%S.%f%z")
         availability_parts = item['availability'].split(' - ')
         availability_parts[0].strip()
-        availability_start = datetime.strptime(availability_parts[0], '%Y-%m-\'%d').date()
+
+        # Parse the date in the provided format and then format it again in the desired format
+        availability_start = datetime.strptime(availability_parts[0], '%d-%m-\'%y').date()
+        availability_start = availability_start.strftime('%Y-%m-%d')
+
         period = availability_parts[1].strip()
+
         if(period.lower()) == 'indefinite period':
             formatted_period = period
         else:
-            formatted_period = datetime.strptime(availability_parts[1].strip(), '%Y-%m-\'%d').date()
+            # Parse the date in the provided format and then format it again in the desired format
+            formatted_period = datetime.strptime(availability_parts[1].strip(), '%d-%m-\'%y').date()
+            formatted_period = formatted_period.strftime('%Y-%m-%d')
 
         record = (
             item['property_id'],

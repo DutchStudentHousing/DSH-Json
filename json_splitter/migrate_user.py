@@ -37,7 +37,7 @@ def migrate_user_json():
             'email': (entry.get('userDisplayName') or 'Unknown') + str(entry.get('userId')) + '@dsh.nl',
             # remove space from Email.
             'password': generate_password(),
-            'user_member_since': entry.get('userMemberSince'),
+            'user_member_since': datetime.strptime(entry.get('userMemberSince'), "%d-%m-%Y").strftime('%Y-%m-%d') if entry.get('userMemberSince') else datetime.now().strftime('%Y-%m-%d'),
             'last_active': (datetime.now() - timedelta(days=random.randint(0, 365))).strftime('%Y-%m-%d')
         }
         user_data['email'] = user_data['email'].replace(',', '')
