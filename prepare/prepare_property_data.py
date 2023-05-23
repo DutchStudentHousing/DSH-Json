@@ -17,15 +17,15 @@ def prepare_property_data(batch_data):
             deposit = "0"
         else:
             deposit = item['deposit']
-        date_published = datetime.strptime(item['date_published'], "%d-%m-%YT%H:%M:%S.%f%z")
+        date_published = datetime.strptime(item['date_published'], "%Y-%m-%dT%H:%M:%S.%f%z")
         availability_parts = item['availability'].split(' - ')
         availability_parts[0].strip()
-        availability_start = datetime.strptime(availability_parts[0], '%d-%m-\'%y').date()
+        availability_start = datetime.strptime(availability_parts[0], '%Y-%m-\'%d').date()
         period = availability_parts[1].strip()
         if(period.lower()) == 'indefinite period':
             formatted_period = period
         else:
-            formatted_period = datetime.strptime(availability_parts[1].strip(), '%d-%m-\'%y').date()
+            formatted_period = datetime.strptime(availability_parts[1].strip(), '%Y-%m-\'%d').date()
 
         record = (
             item['property_id'],

@@ -36,7 +36,7 @@ def prepare_property_details_data(batch_data):
         # Extract the date string from the 'last_seen_at' dictionary
         last_seen_at_str = item['last_seen_at']
         # Convert the date string to a datetime object
-        last_seen_at_datetime = datetime.strptime(last_seen_at_str, "%d-%m-%YT%H:%M:%S.%f%z")
+        last_seen_at_datetime = datetime.strptime(last_seen_at_str, "%Y-%m-%dT%H:%M:%S.%f%z")
 
         record = (
             item['property_id'],

@@ -27,7 +27,7 @@ def migrate_property_json():
             date_obj = datetime.strptime(date_str, '%Y-%m-%dT%H:%M:%S.%f%z')
 
             # Convert the datetime object back to a string with the desired format
-            formatted_date = date_obj.strftime('%d-%m-%YT%H:%M:%S.%f%z')
+            formatted_date = date_obj.strftime('%Y-%m-%dT%H:%M:%S.%f%z')
             # Extract the relevant data fields for the Property table
             property_data = {
                 'property_id': entry.get('externalId'),
@@ -73,7 +73,7 @@ def migrate_property_json():
 
             last_seen_date_str = entry.get('lastSeenAt').get('$date')
             last_seen_date_obj = datetime.strptime(last_seen_date_str, '%Y-%m-%dT%H:%M:%S.%f%z')
-            last_seen_formatted_date = last_seen_date_obj.strftime('%d-%m-%YT%H:%M:%S.%f%z')
+            last_seen_formatted_date = last_seen_date_obj.strftime('%Y-%m-%dT%H:%M:%S.%f%z')
 
             # Extract the relevant data fields for the Property_details table
             property_details_data.append({

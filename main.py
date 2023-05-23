@@ -39,11 +39,13 @@ db = psycopg2.connect(
 # Open a cursor to execute SQL statements
 cur = db.cursor()
 drop_all_tables(cur)
+#check if database is filled
+#if Messages exists, exit
 create_tables(cur)
 cursor = db.cursor()
 
 
-
+print("Checking if properties.json exists")
 if not os.path.isfile('json_input/properties.json'):
     print("Please place the properties.json file in the json_input directory.")
     exit(0)
@@ -51,14 +53,19 @@ if not os.path.isfile('json_input/properties.json'):
 if not os.path.isdir('json'):
     os.mkdir('json')
 
+print("Checking if migrated data files exist.")
 # convert JSON properties.json to multiple files if they don't already exist at the same time.
 threads = []
 if not os.path.isfile('json/property.json'):
     threads.append(threading.Thread(target=migrate_property_json))
     print("Migrating property related data")
+else:
+    print("Property.json found")
 if not os.path.isfile('json/user.json'):
     threads.append(threading.Thread(target=migrate_user_json))
     print("Migrating User related data")
+else:
+    print("User.json found")
     # Start the threads
 for thread in threads:
     thread.start()

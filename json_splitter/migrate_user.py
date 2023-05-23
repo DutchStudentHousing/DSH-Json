@@ -38,7 +38,7 @@ def migrate_user_json():
             # remove space from Email.
             'password': generate_password(),
             'user_member_since': entry.get('userMemberSince'),
-            'last_active': (datetime.now() - timedelta(days=random.randint(0, 365))).strftime('%d-%m-%Y')
+            'last_active': (datetime.now() - timedelta(days=random.randint(0, 365))).strftime('%Y-%m-%d')
         }
         user_data['email'] = user_data['email'].replace(',', '')
         user_data['email'] = user_data['email'].replace(' ', '')
@@ -79,8 +79,8 @@ def migrate_user_json():
             'name': fake_name,
             'email': f'{fake_name}{fake_user_id}@dsh.nl',
             'password': generate_password(),
-            'user_member_since': datetime.now().strftime('%d-%m-%Y'),
-            'last_active': (datetime.now() - timedelta(days=random.randint(0, 365))).strftime('%d-%m-%Y')
+            'user_member_since': datetime.now().strftime('%Y-%m-%d'),
+            'last_active': (datetime.now() - timedelta(days=random.randint(0, 365))).strftime('%Y-%m-%d')
         }
 
         user_data['email'] = user_data['email'].replace(' ', '')
