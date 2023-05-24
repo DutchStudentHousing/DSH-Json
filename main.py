@@ -29,11 +29,11 @@ from json_splitter.migrate_user import migrate_user_json
 load_dotenv()
 # Establish a connection to the database
 db = psycopg2.connect(
-    host=os.environ.get('DSH_HOST'),
-    port=os.environ.get('DSH_PORT'),
-    database=os.environ.get('DSH_DB'),
-    user=os.environ.get('DSH_USER'),
-    password=os.environ.get("DSH_PASSWORD"),
+    host='db',
+    port=5432,
+    database='dsh',
+    user='dsh',
+    password='dsh',
 )
 
 # Open a cursor to execute SQL statements
