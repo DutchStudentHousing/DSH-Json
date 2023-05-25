@@ -42,7 +42,7 @@ Table naming:
         lat FLOAT,
         long FLOAT,
         cover_image_url TEXT,
-        date_published TIMESTAMP WITH TIME ZONE, //(d-%m-%YT%H:%M:%S.%f%z)
+        date_published TIMESTAMP WITH TIME ZONE, //(%Y-%m-%dT%H:%M:%S.%f%z)
         rent FLOAT,
         rent_incl BOOLEAN,
         deposit FLOAT,
@@ -50,8 +50,8 @@ Table naming:
         sqm INTEGER,
         postal_code VARCHAR(7),
         type prop_type,
-        availability_start DATE, //(d-m-\'y)
-        availability_end TEXT //("Indefinite period") || (d-m-\'y)
+        availability_start DATE, //(\'y-m-d)
+        availability_end TEXT //("Indefinite period") || (\'y-m-d)
         )
         
         Property_match (
@@ -78,7 +78,7 @@ Table naming:
         own_bathroom BOOLEAN,
         own_kitchen BOOLEAN,
         smoking_allowed BOOLEAN, 
-        last_seen_at TIMESTAMP WITH TIME ZONE// (%d-%m-%YT%H:%M:%S.%f%z)
+        last_seen_at TIMESTAMP WITH TIME ZONE// (%Y-%m-%dT%H:%M:%S.%f%z)
         )
         
         
