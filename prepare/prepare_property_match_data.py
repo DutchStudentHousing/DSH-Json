@@ -6,7 +6,8 @@ def prepare_property_match_data(batch_data):
             item['property_match_id'],
             item['age_min'],
             item['age_max'],
-            item['gender']
+            item['gender'],
+            item['match_status']
         )
         property_match_data.append(record)
     return property_match_data

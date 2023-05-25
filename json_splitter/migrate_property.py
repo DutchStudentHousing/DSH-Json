@@ -2,6 +2,7 @@ import json
 from datetime import datetime
 
 
+
 def migrate_property_json():
 
     # Open the main JSON file
@@ -25,6 +26,12 @@ def migrate_property_json():
 
             # Convert the string to a datetime object
             date_obj = datetime.strptime(date_str, '%Y-%m-%dT%H:%M:%S.%f%z')
+            # CamelCase type
+            type_value = entry.get('propertyType')
+            if type_value == "Anti-squat":
+                type_value = "AntiSquat"
+            elif type_value == "Student residence":
+                type_value = "StudentResidence"
 
             # Convert the datetime object back to a string with the desired format
             formatted_date = date_obj.strftime('%Y-%m-%dT%H:%M:%S.%f%z')
@@ -43,7 +50,7 @@ def migrate_property_json():
                 'additional_cost': entry.get('additionalCosts'),
                 'sqm': entry.get('areaSqm'),
                 'postal_code': entry.get('postalCode'),
-                'type': entry.get('propertyType'),
+                'type': type_value,
                 'availability': entry.get('rawAvailability')
             }
 
@@ -62,13 +69,38 @@ def migrate_property_json():
         # for Property_match and Property_details tables
         for entry in data:
             # Extract the relevant data fields for the Property_match table
+            match_status_types = entry.get('matchStatus').split(",") if entry.get('matchStatus') else ["NotImportant"]
+
+            for i, match_status_type in enumerate(match_status_types):
+                if match_status_type.strip() == "Working student":
+                    match_status_types[i] = "WorkingStudent"
+                elif match_status_type.strip() == "Looking for a job":
+                    match_status_types[i] = "LookingForAJob"
+                elif match_status_type == " Working":
+                    match_status_types[i] = "Working"
+                elif match_status_type.strip() == "Not important":
+                    match_status_types[i] = "NotImportant"
+
+            match_gender_type = entry.get('matchGender')
+            if match_gender_type == "Not important":
+                match_gender_type = "NotImportant"
+
+            match_age = entry.get('matchAge')
+            if match_age and 'Not important' in match_age:
+
+                age_min = "16"
+                age_max = "99"
+            else:
+                age_min = match_age.split()[0] if match_age else "16"
+                age_max = match_age.split()[-2] if match_age else "99"
+
             property_match_data.append({
                 'property_id': entry.get('externalId'),
                 'property_match_id': property_id,
-                'age_min': entry.get('matchAge').split()[0] if entry.get('matchAge') else None,
-                'age_max': entry.get('matchAge').split()[-2] if entry.get('matchAge') else None,
-                'match_status': entry.get('matchStatus'),  # working, student, etc
-                'gender': entry.get('matchGender')
+                'age_min': age_min,
+                'age_max': age_max,
+                'match_status': match_status_types,  # working, student, etc
+                'gender': match_gender_type if entry.get("matchGender") else "NotImportant"
             })
 
             last_seen_date_str = entry.get('lastSeenAt').get('$date')

@@ -32,8 +32,8 @@ def create_tables(cursor):
 
     # Create the Property table
     cursor.execute("""
-    CREATE TYPE prop_type AS ENUM ('Room', 'Apartment', 'Studio', 'Anti-squat', 
-    'Student residence', 'Other');
+    CREATE TYPE prop_type AS ENUM ('Room', 'Apartment', 'Studio', 'AntiSquat', 
+    'StudentResidence', 'Other');
     CREATE TABLE IF NOT EXISTS Property (
         property_id TEXT PRIMARY KEY,
         name VARCHAR(80),
@@ -56,9 +56,9 @@ def create_tables(cursor):
 
     # Create the Property_match table
     cursor.execute("""
-    CREATE TYPE match_status_type as ENUM ('Student','Working Student', 'Working', 
-    'Looking for a job', 'Not important');
-    CREATE TYPE gender_type as ENUM ('Female', 'Male','Mixed', 'Not important');
+    CREATE TYPE match_status_type as ENUM ('Student','WorkingStudent', 'Working', 
+    'LookingForAJob', 'NotImportant');
+    CREATE TYPE gender_type as ENUM ('Female', 'Male','Mixed', 'NotImportant');
         CREATE TABLE IF NOT EXISTS Property_match (
         property_Id TEXT REFERENCES Property(property_id),
         property_match_id SERIAL PRIMARY KEY,
