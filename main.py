@@ -1,6 +1,6 @@
 import os
 import threading
-from idlelib.iomenu import errors
+
 
 from dotenv import load_dotenv
 import psycopg2
@@ -39,15 +39,11 @@ db = psycopg2.connect(
 
 # Open a cursor to execute SQL statements
 cur = db.cursor()
-answer = input("DEV: remake database? y/n \n")
-if (answer == "y"):
-    drop_all_tables(cur)
+
+drop_all_tables(cur)
 
 
 
-#check if database is filled
-#if Messages exists with data, exit
-# Check if Messages table exists
 cur.execute("""
     SELECT EXISTS (
         SELECT 1
@@ -55,6 +51,16 @@ cur.execute("""
         WHERE LOWER(table_name) = 'message'
     )
 """)
+table_exists = cur.fetchone()[0]
+
+if table_exists:
+    print("Message table exists.")
+    print("Exiting program")
+    exit(0)
+else:
+    print("Message table does not exist.")
+    print("Continuing")
+
 table_exists = cur.fetchone()[0]
 
 if table_exists:
