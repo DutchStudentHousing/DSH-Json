@@ -59,18 +59,6 @@ if table_exists:
 else:
     print("Message table does not exist.")
     print("Continuing")
-
-table_exists = cur.fetchone()[0]
-
-if table_exists:
-    print("Message table exists.")
-    print("Exiting program")
-    exit(0)
-else:
-    print("Message table does not exist.")
-    print("Continuing")
-
-
 #rest of the program
 create_tables(cur)
 cursor = db.cursor()
