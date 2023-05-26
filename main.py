@@ -1,5 +1,6 @@
 import os
 import threading
+from idlelib.iomenu import errors
 
 from dotenv import load_dotenv
 import psycopg2
@@ -29,18 +30,43 @@ from json_splitter.migrate_user import migrate_user_json
 load_dotenv()
 # Establish a connection to the database
 db = psycopg2.connect(
-    host=os.environ.get('DSH_HOST'),
-    port=os.environ.get('DSH_PORT'),
-    database=os.environ.get('DSH_DB'),
-    user=os.environ.get('DSH_USER'),
-    password=os.environ.get("DSH_PASSWORD"),
+    host='db',  # host = db # local os.environ.get('DSH_HOST')
+    port=5432,  # post = 5432 # local os.environ.get('DSH_PORT')
+    database='dsh',  # dsh = dsh # local os.environ.get('DSH_DB')
+    user='dsh',  # user = dsh # local os.environ.get('DSH_USER')
+    password='dsh',  # pw = dsh # local os.environ.get("DSH_PASSWORD")
 )
 
 # Open a cursor to execute SQL statements
 cur = db.cursor()
-drop_all_tables(cur)
+answer = input("DEV: remake database? y/n \n")
+if (answer == "y"):
+    drop_all_tables(cur)
+
+
+
 #check if database is filled
-#if Messages exists, exit
+#if Messages exists with data, exit
+# Check if Messages table exists
+cur.execute("""
+    SELECT EXISTS (
+        SELECT 1
+        FROM information_schema.tables
+        WHERE LOWER(table_name) = 'message'
+    )
+""")
+table_exists = cur.fetchone()[0]
+
+if table_exists:
+    print("Message table exists.")
+    print("Exiting program")
+    exit(0)
+else:
+    print("Message table does not exist.")
+    print("Continuing")
+
+
+#rest of the program
 create_tables(cur)
 cursor = db.cursor()
 

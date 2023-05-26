@@ -42,7 +42,9 @@ Table naming:
         lat FLOAT,
         long FLOAT,
         cover_image_url TEXT,
-        date_published TIMESTAMP WITH TIME ZONE, //(Y-%m-%dT%H:%M:%S.%f%z)
+
+        date_published TIMESTAMP WITH TIME ZONE, //(%Y-%m-%dT%H:%M:%S.%f%z)
+
         rent FLOAT,
         rent_incl BOOLEAN,
         deposit FLOAT,
