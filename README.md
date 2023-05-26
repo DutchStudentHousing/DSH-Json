@@ -20,8 +20,8 @@ Table naming:
         name VARCHAR(60),
         email TEXT,
         hashed_pw TEXT,
-        created DATE, //(%d-%m-%Y)
-        last_active DATE  //(%d-%m-%Y)
+        created DATE, //(%Y-%m-%d)
+        last_active DATE  //(%Y-%m-%d)
         )
         
         User_looking_to_rent (
@@ -42,7 +42,9 @@ Table naming:
         lat FLOAT,
         long FLOAT,
         cover_image_url TEXT,
+
         date_published TIMESTAMP WITH TIME ZONE, //(%Y-%m-%dT%H:%M:%S.%f%z)
+
         rent FLOAT,
         rent_incl BOOLEAN,
         deposit FLOAT,
