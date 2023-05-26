@@ -1,7 +1,5 @@
 import os
 import threading
-
-
 from dotenv import load_dotenv
 import psycopg2
 from db_utils import create_tables
@@ -40,10 +38,11 @@ db = psycopg2.connect(
 # Open a cursor to execute SQL statements
 cur = db.cursor()
 
+#temp drop tables
 drop_all_tables(cur)
 
-
-
+#if Messages exists with data, exit
+# Check if Messages table exists
 cur.execute("""
     SELECT EXISTS (
         SELECT 1
