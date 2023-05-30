@@ -6,7 +6,8 @@ def prepare_user_renter_data(batch_data):
             record = (
                 item['user_id'],
                 item['age'],
-                item['gender']
+                item['gender'],
+                item['status']
             )
             user_renter_data.append(record)
     return user_renter_data

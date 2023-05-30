@@ -1,5 +1,18 @@
 def create_tables(cursor):
-
+    
+    #Create types.
+    cursor.execute("""
+    CREATE TYPE match_status_type as ENUM ('Student','WorkingStudent', 'Working', 
+    'LookingForAJob', 'NotImportant');
+    CREATE TYPE gender_type as ENUM ('Female', 'Male','Mixed', 'NotImportant');
+    CREATE TYPE match_status as ENUM ('Student','WorkingStudent', 'Working', 
+    'LookingForAJob');
+    CREATE TYPE prop_type AS ENUM ('Room', 'Apartment', 'Studio', 'AntiSquat', 
+    'StudentResidence', 'Other');
+    CREATE TYPE energy_label_type AS ENUM('A','B','C','D','E', 'F', 'G', 'Unknown');
+    CREATE TYPE furnished_type as ENUM('Furnished', 'Unfurnished', 'Uncarpeted');
+    CREATE TYPE gender_roommates_type as ENUM('Female', 'Male', 'Mixed', 'Unknown');
+    """)
     # Create the User table
     cursor.execute("""
     CREATE TABLE IF NOT EXISTS Users (
@@ -18,7 +31,8 @@ def create_tables(cursor):
     CREATE TABLE IF NOT EXISTS User_looking_to_rent (
         uid INTEGER REFERENCES Users(uid),
         age INTEGER,
-        gender VARCHAR(20)
+        gender gender_type,
+        status status_type
     );
     """)
 
@@ -32,8 +46,7 @@ def create_tables(cursor):
 
     # Create the Property table
     cursor.execute("""
-    CREATE TYPE prop_type AS ENUM ('Room', 'Apartment', 'Studio', 'AntiSquat', 
-    'StudentResidence', 'Other');
+
     CREATE TABLE IF NOT EXISTS Property (
         property_id TEXT PRIMARY KEY,
         name VARCHAR(80),
@@ -56,14 +69,12 @@ def create_tables(cursor):
 
     # Create the Property_match table
     cursor.execute("""
-    CREATE TYPE match_status_type as ENUM ('Student','WorkingStudent', 'Working', 
-    'LookingForAJob', 'NotImportant');
-    CREATE TYPE gender_type as ENUM ('Female', 'Male','Mixed', 'NotImportant');
+
         CREATE TABLE IF NOT EXISTS Property_match (
         property_Id TEXT REFERENCES Property(property_id),
         property_match_id SERIAL PRIMARY KEY,
-        age_min VARCHAR(20),
-        age_max VARCHAR(20),
+        age_min INTEGER,
+        age_max INTEGER,
         gender gender_type,
         match_status match_status_type[] 
     );
@@ -71,9 +82,7 @@ def create_tables(cursor):
 
     # Create the Property_details table
     cursor.execute('''
-    CREATE TYPE energy_label_type AS ENUM('A','B','C','D','E', 'F', 'G', 'Unknown');
-    CREATE TYPE furnished_type as ENUM('Furnished', 'Unfurnished', 'Uncarpeted');
-    CREATE TYPE gender_roommates_type as ENUM('Female', 'Male', 'Mixed', 'Unknown');
+
     CREATE TABLE IF NOT EXISTS Property_details (
         property_id TEXT REFERENCES Property(property_id),
         property_details_id SERIAL PRIMARY KEY,
