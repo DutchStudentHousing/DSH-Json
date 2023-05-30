@@ -96,9 +96,8 @@ def migrate_user_json():
         user_renter_data = {
             'user_id': max_user_id + i + 1,
             'age': random.randint(16, 50),
-            'gender': random.choice(['male', 'female', 'other']),
-            'status': random.choice(['Student','WorkingStudent', 'Working', 
-            'LookingForAJob'])
+            'gender': random.choice(['male', 'female', 'Other']),
+            'status': random.choice(['Student','WorkingStudent', 'Working', 'LookingForAJob'])
         }
         user_renter_data_list.append(user_renter_data)
 
