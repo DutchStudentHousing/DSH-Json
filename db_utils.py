@@ -5,7 +5,7 @@ def create_tables(cursor):
     CREATE TYPE match_status_type as ENUM ('Student','WorkingStudent', 'Working', 
     'LookingForAJob', 'NotImportant');
     CREATE TYPE gender_type as ENUM ('Female', 'Male','Mixed', 'NotImportant');
-    CREATE TYPE match_status as ENUM ('Student','WorkingStudent', 'Working', 
+    CREATE TYPE status_type as ENUM ('Student','WorkingStudent', 'Working', 
     'LookingForAJob');
     CREATE TYPE prop_type AS ENUM ('Room', 'Apartment', 'Studio', 'AntiSquat', 
     'StudentResidence', 'Other');
