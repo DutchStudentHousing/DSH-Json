@@ -27,7 +27,8 @@ Table naming:
         User_looking_to_rent (
         uid INTEGER REFERENCES Users(uid),
         age INTEGER,
-        gender VARCHAR(20)
+        gender gender_type,
+        status status_type
         )
         
         user_rents_out_property (
@@ -59,9 +60,9 @@ Table naming:
         Property_match (
         property_Id TEXT REFERENCES Property(property_id),
         property_match_id SERIAL PRIMARY KEY,
-        age_min VARCHAR(20),
-        age_max VARCHAR(20),
-        gender gender_type,
+        age_min INTEGER,
+        age_max INTEGER,
+        gender gender_match_type,
         match_status match_status_type[] 
         )
         
@@ -97,8 +98,11 @@ Enum Types:
 
         prop_type('Room', 'Apartment', 'Studio', 'Anti-squat', 'Student residence', 'Other')
         match_status_type('Student','Working Student', 'Working', 'Looking for a job', 'Not important')
-        gender_type('Female', 'Male','Mixed', 'Not important')
+        gender_type_match('Female', 'Male','Mixed', 'Not important')
         energy_label_type('A','B','C','D','E', 'F', 'G', 'Unknown')
         furnished_type('Furnished', 'Unfurnished', 'Uncarpeted')
         gender_roommates_type('Female', 'Male', 'Mixed', 'Unknown')
+        gender_type('Female', 'Male','Other')
+        status_type('Student','Working Student', 'Working', 'Looking for a job')
+        
         
