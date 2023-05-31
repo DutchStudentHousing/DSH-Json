@@ -6,10 +6,10 @@ def generate_fake_messages(cursor):
     try:
 
         # Fetch user_ids and property_ids
-        cursor.execute("SELECT uid FROM User_looking_to_rent;")
+        cursor.execute("SELECT uid FROM User_looking_to_rent LIMIT 20;")
         tenant_ids = [record[0] for record in cursor.fetchall()]
 
-        cursor.execute("SELECT uid, property_id FROM user_rents_out_property;")
+        cursor.execute("SELECT uid, property_id FROM user_rents_out_property LIMIT 20;")
         landlord_records = cursor.fetchall()
 
         messages = []
