@@ -39,7 +39,7 @@ db = psycopg2.connect(
 cur = db.cursor()
 
 #temp drop tables
-drop_all_tables(cur)
+#drop_all_tables(cur)
 
 #if Messages exists with data, exit
 # Check if Messages table exists
