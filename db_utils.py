@@ -64,10 +64,11 @@ def create_tables(cursor):
         postal_code VARCHAR(7),
         type prop_type,
         availability_start DATE,
-        availability_end TEXT
+        availability_end TEXT,
+        rent_per_sqm FLOAT GENERATED ALWAYS AS (rent/sqm) STORED
     );
     """)
-
+    # GENERATED ALWAYS AS STORED
     # Create the Property_match table
     cursor.execute("""
 
